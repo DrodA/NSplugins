@@ -200,9 +200,11 @@ else
 			render.PushRenderTarget( self.RT )
 				render.Clear( 0, 0, 80, 255 )
 				cam.Start2D()
+					/*
 					surface.SetDrawColor( 255, 255, 255, 255 )
 					surface.SetMaterial(Material("props/combine_monitor_access"))
 					surface.DrawTexturedRect( 0, 0, 256, 256 )
+					*/
 
 					local glow_text = math.abs(math.sin(CurTime() * 3) * 255)
 					surface.SetTextColor( 0, 0, 128 )
