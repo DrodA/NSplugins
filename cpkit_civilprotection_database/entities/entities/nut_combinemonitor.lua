@@ -213,7 +213,7 @@ else
 					if !self:GetNetVar("monitor_activated") then
 						surface.SetTextColor( 0, 0, 128, glow_text )
 						surface.SetFont("_CMB_FONT_1")
-						surface.SetTextPos( 12, 256 - 128 - 12)
+						surface.SetTextPos( 12, 256 - 128 - 4)
 						surface.DrawText("Ожидается ввод данных")
 					else
 
@@ -277,6 +277,8 @@ else
 										surface.DrawText(bitkek(2)..util.CRC(self:EntIndex())..bitkek(2).."CP_cmb"..bitkek(4))
 										surface.SetTextPos(20, 220)
 										surface.DrawText(bitkek(8).."cmb_droda was here"..bitkek(4))
+										surface.SetTextPos(88, 50)
+										surface.DrawText(bitkek(4).."cmb_biba"..bitkek(1).."systems"..bitkek(2).."failure"..bitkek(3))
 									end
 								end
 							end
