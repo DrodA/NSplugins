@@ -200,22 +200,20 @@ else
 			pos = pos + self:GetForward() * 13 + self:GetUp() * 19 + self:GetRight() * 6.8
 
 			render.PushRenderTarget( self.RT )
-				render.Clear( 0, 0, 80, 255 )
+				render.Clear( 0, 50, 120, 255 )
 				cam.Start2D()
-					surface.SetDrawColor( 255, 255, 255, 255 )
-					surface.SetMaterial(Material("props/combine_monitor_access"))
-					surface.DrawTexturedRect( 0, 0, 256, 256 )
-
 					local glow_text = math.abs(math.sin(CurTime() * 3) * 255)
 					surface.SetTextColor( 0, 0, 128 )
 					surface.SetFont("_CMB_FONT_1")
-					surface.SetTextPos( 56, 15 )
+					surface.SetTextPos( 10, 15 )
 					surface.DrawText("Информационный стенд")
+					surface.SetTextPos( 64, 35 )
+					surface.DrawText("Гражданина")
 
 					if !self:GetNetVar("monitor_activated") then
 						surface.SetTextColor( 0, 0, 128, glow_text )
 						surface.SetFont("_CMB_FONT_1")
-						surface.SetTextPos( 36, 256 - 128 - 12)
+						surface.SetTextPos( 12, 256 - 128 - 12)
 						surface.DrawText("Ожидается ввод данных")
 					else
 
@@ -234,25 +232,29 @@ else
 								if (v.status != "ANTICITIZEN") then
 									surface.SetTextColor( 0, 0, 128 )
 									surface.SetFont("_CMB_FONT_2")
-									surface.SetTextPos( 18, 50)
+									surface.SetTextPos( 18, 60)
 									surface.DrawText("Имя: "..v.name)
-									surface.SetTextPos( 18, 75)
+									surface.SetTextPos( 18, 85)
 									surface.DrawText("Идентификатор: #"..v.cid)
-									surface.SetTextPos( 18, 75 + 25)
+									surface.SetTextPos( 18, 85 + 25)
 									surface.DrawText("Лояльность: "..v.lp)
-									surface.SetTextPos( 18, 75 + (25 * 2))
+									surface.SetTextPos( 18, 85 + (25 * 2))
 									surface.DrawText("Нарушения: "..v.pp)
-									surface.SetTextPos( 18, 75 + (25 * 3))
+									surface.SetTextPos( 18, 85 + (25 * 3))
 									surface.DrawText("Труд: "..v.work)
-									surface.SetTextPos( 18, 75 + (25 * 4))
+									surface.SetTextPos( 18, 85 + (25 * 4))
 									surface.DrawText("Статус: "..text)
 
 									if v.status == "NON-CITIZEN" then
-										surface.SetTextPos( 28, 91 + (25 * 5))
-										surface.DrawText("Подтвердите статус")
-										surface.SetTextPos( 56, 82 + (25 * 6))
+										surface.SetTextPos( 18, 85 + (25 * 5))
+										surface.DrawText("Подтвердите свой статус")
+										surface.SetTextPos( 68, 76 + (25 * 6))
 										surface.DrawText("В отделе ГСР")
 									end
+
+									surface.SetDrawColor(0, 50, 160)
+									surface.DrawRect(0, 60, 256, 2)
+									surface.DrawRect(0, 85 + (25 * 5), 256, 2)
 								else
 									surface.SetTextColor( 255, 0, 0 )
 									surface.SetFont("_CMB_FONT_4")
