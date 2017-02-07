@@ -591,7 +591,7 @@ nut.command.add("visorbackup", {
 				if IsValid(v) && v:getChar() then
 					if v:isCombine() then
 						v:addDisplay("!ATT: Юнит #"..client:getDigits().." Запрашивает помощь;", Color(255, 10, 0))
-						v:addDisplay("!ATT: Коориданты Юнита #"..client:getDigits()..": "..math.floor(client:GetPos()[1])..", "..math.floor(client:GetPos()[2])..", "..math.floor(client:GetPos()[3])..";", Color(255, 10, 0))
+						v:addDisplay("!ATT: Координаты Юнита #"..client:getDigits()..": "..math.floor(client:GetPos()[1])..", "..math.floor(client:GetPos()[2])..", "..math.floor(client:GetPos()[3])..";", Color(255, 10, 0))
 					end
 				end
 			end
