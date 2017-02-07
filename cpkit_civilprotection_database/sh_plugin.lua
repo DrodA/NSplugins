@@ -61,6 +61,21 @@ nut.chat.register("request_radio", {
 	end,
 })
 
+nut.chat.register("local_dispatch", {
+	color = Color(192, 57, 43),
+	onCanSay = function(client)
+		if (!client:isCombine()) then
+			client:notifyLocalized("notAllowed")
+
+			return false
+		end
+	end,
+	
+	onChatAdd = function(speaker, text)
+		chat.AddText(Color(192, 57, 43), L("icFormat", "Dispatch", text))
+	end,
+})
+
 function PLUGIN:PostPlayerLoadout(c)
 	local combine = c:isCombine()
 	local _char = c:getChar()
