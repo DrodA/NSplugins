@@ -493,7 +493,7 @@ nut.command.add("cpstatus", {
 								if reason == "ANTICITIZEN" || reason == "NON-CITIZEN" || reason == "CITIZEN" then
 									if reason == "ANTICITIZEN" then
 										nut.chat.send(client, "headquarters", "Статус Гражданина #"..data.." изменен на "..reason..".", false, client)
-										nut.chat.send(client, "dispatch", "Гражданин #"..data..". Вы обвиняетесь в тяжком несоответствии. Асоциальный статус подтвержден.", true)
+										nut.chat.send(client, "local_dispatch", "Гражданин #"..data..". Вы обвиняетесь в тяжком несоответствии. Асоциальный статус подтвержден.", true)
 										BroadcastLua("LocalPlayer():EmitSound('npc/overwatch/cityvoice/f_capitalmalcompliance_spkr.wav')")
 										char:setData("cit_status", reason)
 
