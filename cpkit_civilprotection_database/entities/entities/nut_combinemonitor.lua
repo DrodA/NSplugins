@@ -130,10 +130,11 @@ else
 
 	surface.CreateFont( "_CMB_FONT_1", {
 		font = "Myriad Pro",
-		size = 17.5,
+		size = 22,
 		weight = 1000,
 		antialias = true,
 		underline = false,
+		additive = true
 	})
 	surface.CreateFont( "_CMB_FONT_2", {
 		font = "Consolas",
@@ -141,6 +142,7 @@ else
 		weight = 1000,
 		antialias = true,
 		underline = false,
+		additive = true
 	})
 	surface.CreateFont( "_CMB_FONT_4", {
 		font = "System",
