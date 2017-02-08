@@ -40,6 +40,7 @@ if SERVER then
 	function ENT:_turnOff()
 		self:SetNetVar("monitor_activated", false)
 		self:EmitSound("buttons/blip1.wav")
+		self:SetNetVar("users", {})
 		--MsgC("turn off\n")
 	end
 
@@ -74,7 +75,6 @@ if SERVER then
 
 			if self.timeGen < CurTime() then
 				self:_turnOff()
-				self:SetNetVar("users", {})
 			end
 		else
 			self.activator = nil
@@ -86,11 +86,12 @@ if SERVER then
 		return (!self:GetNetVar("monitor_activated") && !pl:isCombine())
 	end
 
-	-- (c) AleXXX_007
+	-- (c) AleXXX_007 [x2]
 	function ENT:_dataList(p)
 		local ch = p:getChar()
 		local data = self:GetNetVar("users", {})
-		data[#data + 1] =
+
+		data =
 		{
 			name = p:Name(),
 			cid = ch:getData("cit_cid", 0),
@@ -104,30 +105,17 @@ if SERVER then
 	end
 
 	function ENT:Use(pl)
+		local data = self:GetNetVar("users", {})
 		if self:_canTurnOn(pl) then
 			self.activator = pl
 			self:_turnOn(pl)
 			self:_dataList(pl)
+			--PrintTable(data)
 
 			return
 		end
 	end
 else
-	local glow = CreateMaterial( "_CMB_SMALLMONITOR_GLOW4", "UnlitGeneric", {
-		["$basetexture"] = "sprites/glow06",
-		["$additive"] = "1",
-		["$selfilium"] = "1",
-		["$vertexcolor"] = "1",
-		["$vertexalpha"] = "1",
-	})
-	local errorc = CreateMaterial( "_CMB_ERROR", "Modulate", {
-		["$basetexture"] = "props/combine_monitor_access_off",
-		["$ignorez"] = "1",
-		["$vertexcolor"] = "1",
-		["$vertexalpha"] = "1",
-		["$translucent"] = "1",
-	})
-
 	surface.CreateFont( "_CMB_FONT_1", {
 		font = "Myriad Pro",
 		size = 22,
@@ -175,8 +163,6 @@ else
 				}
 			}
 		} )
-		self.error = true
-		self.errorFlash = CurTime()
 	end
 
 	local function bitkek( int )
@@ -187,6 +173,8 @@ else
 		return str
 	end
 
+	local offset = 25
+	local material = Material("props/combine_monitor_access")
 	function ENT:DrawTranslucent()
 		local mypos = self:GetPos()
 		local dist = LocalPlayer():GetPos():Distance(mypos)
@@ -205,12 +193,15 @@ else
 				render.Clear( 0, 50, 120, 255 )
 				cam.Start2D()
 					local glow_text = math.abs(math.sin(CurTime() * 3) * 255)
-					surface.SetTextColor( 0, 0, 128 )
-					surface.SetFont("_CMB_FONT_1")
-					surface.SetTextPos( 10, 15 )
-					surface.DrawText("Информационный стенд")
-					surface.SetTextPos( 64, 35 )
-					surface.DrawText("Гражданина")
+					local v = self:GetNetVar("users", {})
+					if (v.status != "ANTICITIZEN") then
+						surface.SetTextColor( 0, 0, 128 )
+						surface.SetFont("_CMB_FONT_1")
+						surface.SetTextPos( 9, 6 )
+						surface.DrawText("Информационный стенд")
+						surface.SetTextPos( 64, 26 )
+						surface.DrawText("Гражданина")
+					end
 
 					if !self:GetNetVar("monitor_activated") then
 						surface.SetTextColor( 0, 0, 128, glow_text )
@@ -218,72 +209,64 @@ else
 						surface.SetTextPos( 12, 256 - 128 - 4)
 						surface.DrawText("Ожидается ввод данных")
 					else
-						local data = self:GetNetVar("users", {})
-						for k, v in ipairs(data) do
+						if v.status == "NON-CITIZEN" then
+							text = "не подтвержден"
+						elseif v.status == "CITIZEN" then
+							text = "подтвержден"
+						elseif v.status == "ANTICITIZEN" then
+							text = ""
+							render.Clear( 80, 0, 0, 255 )
+						end
+
+						if #v.name > 19 then
+							v.name = string.sub(v.name, 1, 19 - 3) .. "..."
+						end
+
+						if (v.status != "ANTICITIZEN") then
+							surface.SetTextColor( 0, 0, 128 )
+							surface.SetFont("_CMB_FONT_2")
+							surface.SetTextPos( 18, 55)
+							surface.DrawText("Имя: "..v.name)
+							surface.SetTextPos( 18, 80)
+							surface.DrawText("Идентификатор: #"..v.cid)
+							surface.SetTextPos( 18, 80 + offset)
+							surface.DrawText("Лояльность: "..v.lp)
+							surface.SetTextPos( 18, 80 + (offset * 2))
+							surface.DrawText("Нарушения: "..v.pp)
+							surface.SetTextPos( 18, 80 + (offset * 3))
+							surface.DrawText("Труд: "..v.work)
+							surface.SetTextPos( 18, 80 + (offset * 4))
+							surface.DrawText("Статус: "..text)
+
 							if v.status == "NON-CITIZEN" then
-								text = "не подтвержден"
-							elseif v.status == "CITIZEN" then
-								text = "подтвержден"
-							elseif v.status == "ANTICITIZEN" then
-								text = ""
-								render.Clear( 80, 0, 0, 255 )
+								surface.SetTextPos( 18, 80 + (offset * 5))
+								surface.DrawText("Подтвердите свой статус")
+								surface.SetTextPos( 68, 76 + (offset * 6))
+								surface.DrawText("В отделе ГСР")
 							end
 
-							if #v.name > 19 then
-								v.name = string.sub(v.name, 1, 19 - 3) .. "..."
-							end
+							surface.SetDrawColor(0, 50, 160)
+							surface.DrawRect(0, 52, 256, 2)
+							surface.DrawRect(0, 80 + (offset * 5), 256, 2)
+						else
+							surface.SetTextColor( 255, 0, 0 )
+							surface.SetFont("_CMB_FONT_4")
+							surface.SetTextPos( 10, 50 )
+							surface.DrawText("ERROR")
 
-							if (v.status != "ANTICITIZEN") then
-								surface.SetTextColor( 0, 0, 128 )
-								surface.SetFont("_CMB_FONT_2")
-								surface.SetTextPos( 18, 60)
-								surface.DrawText("Имя: "..v.name)
-								surface.SetTextPos( 18, 85)
-								surface.DrawText("Идентификатор: #"..v.cid)
-								surface.SetTextPos( 18, 85 + 25)
-								surface.DrawText("Лояльность: "..v.lp)
-								surface.SetTextPos( 18, 85 + (25 * 2))
-								surface.DrawText("Нарушения: "..v.pp)
-								surface.SetTextPos( 18, 85 + (25 * 3))
-								surface.DrawText("Труд: "..v.work)
-								surface.SetTextPos( 18, 85 + (25 * 4))
-								surface.DrawText("Статус: "..text)
-
-								if v.status == "NON-CITIZEN" then
-									surface.SetTextPos( 18, 85 + (25 * 5))
-									surface.DrawText("Подтвердите свой статус")
-									surface.SetTextPos( 68, 76 + (25 * 6))
-									surface.DrawText("В отделе ГСР")
-								end
-
-								surface.SetDrawColor(0, 50, 160)
-								surface.DrawRect(0, 60, 256, 2)
-								surface.DrawRect(0, 85 + (25 * 5), 256, 2)
-							else
+							if LocalPlayer():GetPos():Distance(self:GetPos()) < 300 then
 								surface.SetTextColor( 255, 0, 0 )
-								surface.SetFont("_CMB_FONT_4")
-								surface.SetTextPos( 10, 50 )
-								surface.DrawText("ERROR")
-
-								if CurTime() >= self.errorFlash then
-									self.error = !self.error
-									self.errorFlash = CurTime() + 0.4
-								end
-
-								if LocalPlayer():GetPos():Distance(self:GetPos()) < 300 then
-									surface.SetTextColor( 255, 0, 0 )
-									surface.SetFont("_CMB_FONT_5")
-									surface.SetTextPos(20, 140)
-									surface.DrawText("1E"..bitkek(13))
-									surface.SetTextPos(20, 155)
-									surface.DrawText(bitkek(6).."cmb_ACCESS")
-									surface.SetTextPos(20, 180)
-									surface.DrawText(bitkek(2)..util.CRC(self:EntIndex())..bitkek(2).."CP_cmb"..bitkek(4))
-									surface.SetTextPos(20, 220)
-									surface.DrawText(bitkek(8).."cmb_droda was here"..bitkek(4))
-									surface.SetTextPos(88, 50)
-									surface.DrawText(bitkek(4).."cmb_biba"..bitkek(1).."systems"..bitkek(2).."failure"..bitkek(3))
-								end
+								surface.SetFont("_CMB_FONT_5")
+								surface.SetTextPos(20, 140)
+								surface.DrawText("1E"..bitkek(13))
+								surface.SetTextPos(20, 155)
+								surface.DrawText(bitkek(6).."cmb_ACCESS")
+								surface.SetTextPos(20, 180)
+								surface.DrawText(bitkek(2)..util.CRC(self:EntIndex())..bitkek(2).."CP_cmb"..bitkek(4))
+								surface.SetTextPos(20, 220)
+								surface.DrawText(bitkek(8).."cmb_droda was here"..bitkek(4))
+								surface.SetTextPos(88, 50)
+								surface.DrawText(bitkek(4).."cmb_biba"..bitkek(1).."systems"..bitkek(2).."failure"..bitkek(3))
 							end
 						end
 					end
