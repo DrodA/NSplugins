@@ -55,21 +55,19 @@ if SERVER then
 	end
 
 	function ENT:Think()
-		local dt = self:GetNetVar("users", {})
+		local i = self:GetNetVar("users", {})
 		if self:GetNetVar("monitor_activated") then
-			for _, i in ipairs(dt) do
-				if i.status == "ANTICITIZEN" then
-					if !nextmessage || CurTime() >= nextmessage then
-						local getall = player.GetAll()
-						for _, combine in ipairs(getall) do
-							if combine:Alive() && combine:getChar() then
-								if combine:isCombine() then
-									combine:addDisplay("Всем постам. Нарушитель #"..i.cid.." замечен по координатам: "..math.floor(self:GetPos()[1])..", "..math.floor(self:GetPos()[2])..", "..math.floor(self:GetPos()[3])..".", Color(255, 0, 0))
-								end
+			if i.status == "ANTICITIZEN" then
+				if !nextmessage || CurTime() >= nextmessage then
+					local getall = player.GetAll()
+					for _, combine in ipairs(getall) do
+						if combine:Alive() && combine:getChar() then
+							if combine:isCombine() then
+								combine:addDisplay("Всем постам. Нарушитель #"..i.cid.." замечен по координатам: "..math.floor(self:GetPos()[1])..", "..math.floor(self:GetPos()[2])..", "..math.floor(self:GetPos()[3])..".", Color(255, 0, 0))
 							end
 						end
-						nextmessage = CurTime() + 10
 					end
+					nextmessage = CurTime() + 10
 				end
 			end
 
