@@ -148,6 +148,27 @@ nut.command.add("apply", {
 	end
 })
 
+function PLUGIN:SaveData()
+	local data = {}
+		for k, v in ipairs(ents.FindByClass("nut_combinemonitor")) do
+			data[#data + 1] =
+			{
+				pos = v:GetPos(),
+				angles = v:GetAngles(),
+			}
+		end
+
+	self:setData(data)
+end
+
+function PLUGIN:LoadData()
+	for k, v in ipairs(self:getData() or {}) do
+		local entity = ents.Create("nut_combinemonitor")
+		entity:SetPos(v.pos)
+		entity:SetAngles(v.angles)
+		entity:Spawn()
+	end
+end
 
 hook.Add("BuildHelpMenu", "moduleCPsystem", function(tabs)
 	tabs["Civil Protection Database"] = function(node)
