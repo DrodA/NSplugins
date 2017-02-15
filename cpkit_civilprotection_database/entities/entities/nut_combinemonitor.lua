@@ -193,7 +193,7 @@ else
 					local glow_text = math.abs(math.sin(CurTime() * 3) * 255)
 					local v = self:getNetVar("users", {})
 					if (v.status != "ANTICITIZEN") then
-						surface.SetTextColor( 0, 0, 128 )
+						surface.SetTextColor(color_white)
 						surface.SetFont("_CMB_FONT_1")
 						surface.SetTextPos( 9, 6 )
 						surface.DrawText("Информационный стенд")
@@ -202,9 +202,9 @@ else
 					end
 
 					if !self:getNetVar("monitor_activated") then
-						surface.SetTextColor( 0, 0, 128, glow_text )
+						surface.SetTextColor(255, 255, 255, glow_text)
 						surface.SetFont("_CMB_FONT_1")
-						surface.SetTextPos( 12, 256 - 128 - 4)
+						surface.SetTextPos( 9, 256 - 128 - 4)
 						surface.DrawText("Ожидается ввод данных")
 					else
 						if v.status == "NON-CITIZEN" then
@@ -221,7 +221,7 @@ else
 						end
 
 						if (v.status != "ANTICITIZEN") then
-							surface.SetTextColor( 0, 0, 128 )
+							surface.SetTextColor(color_white)
 							surface.SetFont("_CMB_FONT_2")
 							surface.SetTextPos( 18, 55)
 							surface.DrawText("Имя: "..v.name)
