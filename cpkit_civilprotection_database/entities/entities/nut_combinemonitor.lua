@@ -16,7 +16,7 @@ if SERVER then
 		self:SetHealth(1);
 		self:SetSolid(SOLID_VPHYSICS);
 
-		self:SetNetVar("monitor_activated", false)
+		self:setNetVar("monitor_activated", false)
 
 		self.timeGen = CurTime()
 
@@ -38,16 +38,16 @@ if SERVER then
 	end
 
 	function ENT:_turnOff()
-		self:SetNetVar("monitor_activated", false)
+		self:setNetVar("monitor_activated", false)
 		self:EmitSound("buttons/blip1.wav")
-		self:SetNetVar("users", {})
+		self:setNetVar("users", {})
 		--MsgC("turn off\n")
 	end
 
 	function ENT:_turnOn(pl)	
 		local char = pl:getChar()
 		if char:getData("cit_cid", 0) then
-			self:SetNetVar("monitor_activated", true)
+			self:setNetVar("monitor_activated", true)
 			self:EmitSound("buttons/blip1.wav")
 			self.timeGen = CurTime() + 8 -- 8
 			--MsgC("turn on\n")
@@ -55,8 +55,8 @@ if SERVER then
 	end
 
 	function ENT:Think()
-		local i = self:GetNetVar("users", {})
-		if self:GetNetVar("monitor_activated") then
+		local i = self:getNetVar("users", {})
+		if self:getNetVar("monitor_activated") then
 			if i.status == "ANTICITIZEN" then
 				if !nextmessage || CurTime() >= nextmessage then
 					local getall = player.GetAll()
@@ -81,13 +81,13 @@ if SERVER then
 	end
 	
 	function ENT:_canTurnOn(pl)
-		return (!self:GetNetVar("monitor_activated") && !pl:isCombine())
+		return (!self:getNetVar("monitor_activated") && !pl:isCombine())
 	end
 
 	-- (c) AleXXX_007 [x2]
 	function ENT:_dataList(p)
 		local ch = p:getChar()
-		local data = self:GetNetVar("users", {})
+		local data = self:getNetVar("users", {})
 
 		data =
 		{
@@ -99,11 +99,11 @@ if SERVER then
 			work = ch:getData("cit_working", 0)
 		}
 
-		self:SetNetVar("users", data)
+		self:setNetVar("users", data)
 	end
 
 	function ENT:Use(pl)
-		local data = self:GetNetVar("users", {})
+		local data = self:getNetVar("users", {})
 		if self:_canTurnOn(pl) then
 			self.activator = pl
 			self:_turnOn(pl)
@@ -191,7 +191,7 @@ else
 				render.Clear( 0, 50, 120, 255 )
 				cam.Start2D()
 					local glow_text = math.abs(math.sin(CurTime() * 3) * 255)
-					local v = self:GetNetVar("users", {})
+					local v = self:getNetVar("users", {})
 					if (v.status != "ANTICITIZEN") then
 						surface.SetTextColor( 0, 0, 128 )
 						surface.SetFont("_CMB_FONT_1")
@@ -201,7 +201,7 @@ else
 						surface.DrawText("Гражданина")
 					end
 
-					if !self:GetNetVar("monitor_activated") then
+					if !self:getNetVar("monitor_activated") then
 						surface.SetTextColor( 0, 0, 128, glow_text )
 						surface.SetFont("_CMB_FONT_1")
 						surface.SetTextPos( 12, 256 - 128 - 4)
