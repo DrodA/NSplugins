@@ -1,5 +1,5 @@
 PLUGIN.name = "Data module [hl2rp] | simplified version"
-PLUGIN.author = "CW: kurozael, Schwarz Kruppzo | NS: Robby, DrodA"
+PLUGIN.author = "CW: kurozael, Schwarz Kruppzo | NS: Robby, DrodA, AleXXX_007"
 PLUGIN.desc = "Adds new (old) branded flexible Civil Protection system."
 
 nut.util.include("sh_commands.lua")
