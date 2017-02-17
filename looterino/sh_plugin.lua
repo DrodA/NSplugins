@@ -47,7 +47,7 @@ function PLUGIN:PlayerDeath( player, damage, attacker )
 	local model = "models/props_junk/garbage_bag001a.mdl"
 
 	local strg = ents.Create("nut_itemstorage")
-	body:SetModel(model)
+	strg:SetModel(model)
 	strg:SetPos(player:GetPos())
 	strg:SetAngles(player:GetAngles())
 	strg:SetSolid(SOLID_VPHYSICS)
