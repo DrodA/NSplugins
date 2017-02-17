@@ -4,11 +4,9 @@ ENT.Author = "DrodA"
 ENT.Category = "NutScript"
 ENT.Spawnable = false
 
-ENT.Model = "models/Items/item_item_crate.mdl"
-
 if (SERVER) then
 	function ENT:Initialize()
-		self:SetModel(self.Model)
+		//self:SetModel("models/Items/item_item_crate.mdl")
 		self:SetSolid(SOLID_VPHYSICS)
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
