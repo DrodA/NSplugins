@@ -12,22 +12,6 @@ local config_container = {
 	City = "C17-I"
 }
 
-/*
-nut.chat.register("Cityinfo", {
-	font = "nutRadioFont",
-	onCanSay =  function(speaker, text)
-		return (speaker:IsAdmin() || speaker:isCombine())
-	end,
-	onCanHear = 1000000,
-	onChatAdd = function(speaker, text)
-		if speaker:isCombine() then chat.AddText(headquarters_color, "Информационная система "..config_container.City..": "..text) return end
-
-		chat.AddText(headquarters_color, "Информационная система "..config_container.City..": <:: "..text.." ::>")
-	end,
-	prefix = {"/info"}
-})
-*/
-
 nut.chat.register("headquarters", {
 	font = "nutRadioFont",
 	onCanSay =  function(speaker, text)
@@ -93,7 +77,6 @@ function PLUGIN:PostPlayerLoadout(c)
 			_char:setData("cit_penalty", 0)
 		end
 	end
-	--nut.chat.send(c, "Cityinfo", "Гражданин "..c:Nick()..", Альянс приветствует вас в "..config_container.City..".", false, c)
 end
 
 if SERVER then
