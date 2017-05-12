@@ -34,7 +34,7 @@ nut.chat.register("request_radio", {
 		local dist = speaker:GetPos():Distance(listener:GetPos())
 		local speakRange = nut.config.get("chatRange", 280)
 
-		if (dist <= speakRange) || (speaker:isCombine() && speaker:isCombine()) then
+		if (dist <= speakRange) || (speaker:isCombine() && listener:isCombine()) then
 			return true
 		end
 
