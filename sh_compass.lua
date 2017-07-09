@@ -30,10 +30,12 @@ if (CLIENT) then
 		if !IsValid(client) or !client:Alive() then return end;
 		if (client:GetInfoNum("nut_compass", 0) == 0) then return end;
 
-		local width = ScrW() / 2.5;
+		local scrW, scrH = ScrW(), ScrH();
+		
+		local width = scrW / 2.5;
 		local height = 30;
 
-		draw.RoundedBox(8, (ScrW() / 2) - (width / 2), ScrH() - 40, width, height, Color(0, 0, 0, 180));
+		draw.RoundedBox(8, (scrW / 2) - (width / 2), scrH - 40, width, height, Color(0, 0, 0, 180));
 
 		local finalText = "";
 		local yaw = math.floor(client:GetAngles().y);
@@ -53,7 +55,7 @@ if (CLIENT) then
 			end;
 		end;
 
-		draw.DrawText(finalText, "CompassFont", ScrW() / 2, ScrH() - 40 + 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER);
+		draw.DrawText(finalText, "CompassFont", scrW / 2, scrH - 40 + 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER);
 	end;
 
 	function PLUGIN:SetupQuickMenu(menu)
