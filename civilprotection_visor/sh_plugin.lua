@@ -52,7 +52,6 @@ if (CLIENT) then
 		if (isCombine and !IsValid(nut.gui.char)) then
 			local x, y = 8, 20;
 			local w, h = scrW * 0.5, scrH * 0.2;
-			local color = color_white;
 
 			for i = 1, #self.displays do
 				local data = self.displays[i];
