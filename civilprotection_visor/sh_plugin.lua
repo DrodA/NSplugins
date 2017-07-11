@@ -1,4 +1,4 @@
-PLUGIN.name = "New (old) display [Civil Protection]";
+PLUGIN.name = "New (old) civil protection display";
 PLUGIN.author = "DrodA";
 PLUGIN.desc = "Adds some shity dislay";
 
