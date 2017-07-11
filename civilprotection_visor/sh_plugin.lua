@@ -102,4 +102,8 @@ if (CLIENT) then
 			client:EmitSound("buttons/button16.wav", 30, 120);
 		end;
 	end;
+	
+	if (IsValid(nut.gui.combine)) then
+		nut.gui.combine:Remove();
+	end;
 end;
