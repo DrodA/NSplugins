@@ -2,6 +2,28 @@ PLUGIN.name = "Le compasserino";
 PLUGIN.author = "CW: Gr4Ss, NS: DrodA";
 PLUGIN.desc = "Adds HUDerino compasserino";
 
+local langkey = "english";
+do
+	local langTable =
+	{
+		toggleCompass = "Toggle Compass",
+
+	};
+
+	table.Merge(nut.lang.stored[langkey], langTable);
+end;
+
+local langkey = "russian";
+do
+	local langTable =
+	{
+		toggleCompass = "Активировать компас",
+
+	};
+
+	table.Merge(nut.lang.stored[langkey], langTable);
+end;
+
 if (CLIENT) then
 	surface.CreateFont("CompassFont",
 	{
