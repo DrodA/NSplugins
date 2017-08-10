@@ -1,6 +1,6 @@
-PLUGIN.name = "Le compasserino"
-PLUGIN.author = "CW: Gr4Ss, NS: DrodA"
-PLUGIN.desc = "Adds HUDerino compasserino"
+PLUGIN.name = "Le compasserino";
+PLUGIN.author = "CW: Gr4Ss, NS: DrodA";
+PLUGIN.desc = "Adds HUDerino compasserino";
 
 if (CLIENT) then
 	surface.CreateFont("CompassFont",
@@ -67,6 +67,6 @@ if (CLIENT) then
 			end;
 		end, NUT_CVAR_COMPASS:GetBool());
 
-		menu:addSpacer()
+		menu:addSpacer();
 	end;
 end;
