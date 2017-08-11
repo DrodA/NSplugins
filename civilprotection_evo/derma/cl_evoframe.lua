@@ -86,7 +86,7 @@ concommand.Add("evo_settings", function()
 
 	Frame:SetPos((surface.ScreenWidth()/2) - 350,(surface.ScreenHeight()/2) - 350);
 	Frame:SetSize(700, 120);
-	Frame:SetTitle("")
+	Frame:SetTitle("");
 	Frame:SetBackgroundBlur(true);
 	Frame:SetDraggable(true)
 	Frame:MakePopup();
