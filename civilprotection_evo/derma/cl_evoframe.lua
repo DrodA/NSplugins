@@ -88,7 +88,7 @@ concommand.Add("evo_settings", function()
 	Frame:SetSize(700, 120);
 	Frame:SetTitle("");
 	Frame:SetBackgroundBlur(true);
-	Frame:SetDraggable(true)
+	Frame:SetDraggable(true);
 	Frame:MakePopup();
 	Frame:Center();
 
