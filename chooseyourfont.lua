@@ -1,3 +1,4 @@
+local PLUGIN = PLUGIN;
 PLUGIN.name = "Choose Your Font, Sir.";
 PLUGIN.author = "AleXXX_007, DrodA"; // github.com/xAleXXX007x/Witcher-RolePlay
 PLUGIN.desc = "Fix it, Alexerino | Request by NexXer";
@@ -33,7 +34,6 @@ if (CLIENT) then
 		self.ListPanel.Settings = self.ListPanel:Add("DComboBox");
 		self.ListPanel.Settings:Dock(TOP);
 
-		local PLUGIN = nut.plugin.list["chooseyourfont"];
 		for k, v in ipairs(PLUGIN.Fonts) do
 			self.ListPanel.Settings:AddChoice(v.name, v.font);
 		end;
