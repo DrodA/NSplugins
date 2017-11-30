@@ -1,6 +1,6 @@
-PLUGIN.name = "Le compasserino";
+PLUGIN.name = "Compass";
 PLUGIN.author = "CW: Gr4Ss, NS: DrodA";
-PLUGIN.desc = "Adds HUDerino compasserino";
+PLUGIN.desc = "Adds Compass on your HUD";
 
 local function InitLanguages()
 	local langkey = "english";
@@ -37,19 +37,19 @@ if (CLIENT) then
 		size    = 25,
 		weight  = 300,
 		antialias = true,
-		shadow = false,
+		shadow = false
 	});
 
 	PLUGIN.compassText = {};
-	PLUGIN.compassText[0] 		= "N";
-	PLUGIN.compassText[45] 		= "NW";
-	PLUGIN.compassText[90] 		= "W";
-	PLUGIN.compassText[135] 	= "SW";
-	PLUGIN.compassText[180] 	= "S";
-	PLUGIN.compassText[-180] 	= "S";
-	PLUGIN.compassText[-135] 	= "SE";
-	PLUGIN.compassText[-90] 	= "E";
-	PLUGIN.compassText[-45] 	= "NE";
+	PLUGIN.compassText[0] = "N";
+	PLUGIN.compassText[45] = "NW";
+	PLUGIN.compassText[90] = "W";
+	PLUGIN.compassText[135] = "SW";
+	PLUGIN.compassText[180] = "S";
+	PLUGIN.compassText[-180] = "S";
+	PLUGIN.compassText[-135] = "SE";
+	PLUGIN.compassText[-90] = "E";
+	PLUGIN.compassText[-45] = "NE";
 
 	NUT_CVAR_COMPASS = CreateClientConVar("nut_compass", 1, true, true);
 	
