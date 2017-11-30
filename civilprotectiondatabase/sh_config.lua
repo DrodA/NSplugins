@@ -1,13 +1,13 @@
 local PLUGIN = PLUGIN
 
-PLUGIN.CivilProtection.City 			= "C17"
-PLUGIN.CivilProtection.InEmitSound 		= "npc/combine_soldier/vo/on2.wav"
-PLUGIN.CivilProtection.OutEmitSound 	= "npc/combine_soldier/vo/off"..math.random(1, 2)..".wav"
-PLUGIN.CivilProtection.CallBackTimer	= 2
-PLUGIN.CivilProtection.CallDelay 		= 3
-PLUGIN.CivilProtection.MaximumLoyality	= 100
-PLUGIN.CivilProtection.MaximumPenalty 	= 100
-PLUGIN.CivilProtection.CIDLength 		= 5
+PLUGIN.CivilProtection.City = "C17"
+PLUGIN.CivilProtection.InEmitSound = "npc/combine_soldier/vo/on2.wav"
+PLUGIN.CivilProtection.OutEmitSound = "npc/combine_soldier/vo/off"..math.random(1, 2)..".wav"
+PLUGIN.CivilProtection.CallBackTimer = 2
+PLUGIN.CivilProtection.CallDelay = 3
+PLUGIN.CivilProtection.MaximumLoyality = 100
+PLUGIN.CivilProtection.MaximumPenalty = 100
+PLUGIN.CivilProtection.CIDLength = 5
 PLUGIN.CivilProtection.AllowedFactions 	=
 {
 	[FACTION_CITIZEN] = true,
