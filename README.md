@@ -1,4 +1,5 @@
-# Le readmerino
+# Introduction
 
-Boro, dis shiet is free.
-Feel free to use or modify it.
+Free plugins for NutScript framework that you can modify or steal without permission
+
+© nutscript.net, NutScript is roleplay framework by Chessnut, TheBlackTea (aka Rebel1324)
