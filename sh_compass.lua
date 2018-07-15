@@ -1,100 +1,58 @@
-PLUGIN.name = "Compass";
-PLUGIN.author = "CW: Gr4Ss, NS: DrodA";
-PLUGIN.desc = "Adds Compass on your HUD";
+local plugin = PLUGIN
+plugin.name = "Compass"
+plugin.author = "DrodA"
+plugin.desc = "Adds Compass on your HUD"
+plugin.compassText = {}
 
-local function InitLanguages()
-	local langkey = "english";
-	do
-		local langTable =
-		{
-			toggleCompass = "Toggle Compass",
+if (SERVER) then return end
 
-		};
+plugin.compassText[0] = "N"
+plugin.compassText[45] = "NW"
+plugin.compassText[90] = "W"
+plugin.compassText[135] = "SW"
+plugin.compassText[180] = "S"
+plugin.compassText[-180] = "S"
+plugin.compassText[-135] = "SE"
+plugin.compassText[-90] = "E"
+plugin.compassText[-45] = "NE"
 
-		table.Merge(nut.lang.stored[langkey], langTable);
-	end;
+NUT_CVAR_COMPASS = CreateClientConVar("nut_compass", 1, true, true)
 
-	local langkey = "russian";
-	do
-		local langTable =
-		{
-			toggleCompass = "Активировать компас",
+local color_background = Color(0, 0, 0, 180)
+local offset = 39
+function plugin:HUDPaint()
+	local scrW, scrH = ScrW(), ScrH()
 
-		};
+	local client = LocalPlayer()
+	if !IsValid(client) or !client:Alive() then return end
+	if (NUT_CVAR_COMPASS:GetBool() == false) then return end
 
-		table.Merge(nut.lang.stored[langkey], langTable);
-	end;
-end;
+	local w, h = scrW * .4, 30
+	local x, y = (scrW * .5) - (w * .5), scrH - h
 
-function PLUGIN:InitializedPlugins()
-	InitLanguages();
-end;
+	draw.RoundedBox(8, x, y, w, h, color_background)
 
-if (CLIENT) then
-	surface.CreateFont("CompassFont",
-	{
-		font    = "Time News Roman",
-		size    = 25,
-		weight  = 300,
-		antialias = true,
-		shadow = false
-	});
+	local finalText = ""
+	local yaw = math.floor(client:GetAngles().y)
 
-	PLUGIN.compassText = {};
-	PLUGIN.compassText[0] = "N";
-	PLUGIN.compassText[45] = "NW";
-	PLUGIN.compassText[90] = "W";
-	PLUGIN.compassText[135] = "SW";
-	PLUGIN.compassText[180] = "S";
-	PLUGIN.compassText[-180] = "S";
-	PLUGIN.compassText[-135] = "SE";
-	PLUGIN.compassText[-90] = "E";
-	PLUGIN.compassText[-45] = "NE";
+	for i = yaw - offset, yaw + offset do
+		local y = i
+		if i > 180 then
+			y = -360 + i
+		elseif i < -180 then
+			y = 360 + i
+		end
 
-	NUT_CVAR_COMPASS = CreateClientConVar("nut_compass", 1, true, true);
-	
-	function PLUGIN:HUDPaint()
-		local client = LocalPlayer();
-		if !IsValid(client) or !client:Alive() then return end;
-		if (client:GetInfoNum("nut_compass", 0) == 0) then return end;
+		finalText = (self.compassText[y] and self.compassText[y]..finalText) or " "..finalText
+	end
 
-		local scrW, scrH = ScrW(), ScrH();
-		
-		local width = scrW / 2.5;
-		local height = 30;
+	draw.DrawText(finalText, "nutMediumFont", x, y, color_white)
+end
 
-		draw.RoundedBox(8, (scrW / 2) - (width / 2), scrH - 40, width, height, Color(0, 0, 0, 180));
+function plugin:SetupQuickMenu(menu)
+	local buttonCompass = menu:addCheck("Toggle compass", function(panel, state)
+		RunConsoleCommand("nut_compass", state and "1" or "0")
+	end, NUT_CVAR_COMPASS:GetBool())
 
-		local finalText = "";
-		local yaw = math.floor(client:GetAngles().y);
-
-		for i = yaw - 33, yaw + 33 do
-			local y = i;
-			if i > 180 then
-				y = -360 + i;
-			elseif i < -180 then
-				y = 360 + i;
-			end;
-
-			if (self.compassText[y]) then
-				finalText = self.compassText[y]..finalText;
-			else
-				finalText = " "..finalText;
-			end;
-		end;
-
-		draw.DrawText(finalText, "CompassFont", scrW / 2, scrH - 40 + 2, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER);
-	end;
-
-	function PLUGIN:SetupQuickMenu(menu)
-		local buttonCompass = menu:addCheck(L"toggleCompass", function(panel, state)
-			if (state) then
-				RunConsoleCommand("nut_compass", "1");
-			else
-				RunConsoleCommand("nut_compass", "0");
-			end;
-		end, NUT_CVAR_COMPASS:GetBool());
-
-		menu:addSpacer();
-	end;
-end;
+	menu:addSpacer()
+end
