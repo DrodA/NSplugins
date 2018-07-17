@@ -71,7 +71,7 @@ for k, v in pairs(plugin.moods) do
 	local tblData = {}
 	tblData.onRun = function(client, arguments)
 		local modelClass = v[nut.anim.getModelClass(client:GetModel())]
-		print(plugin:GetPlayerMood(client))
+		
 		if (modelClass) then
 			if (plugin:GetPlayerMood(client) == k) then
 				return plugin:ResetPlayerMood(client)
