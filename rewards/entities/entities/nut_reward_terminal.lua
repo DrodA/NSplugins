@@ -65,6 +65,8 @@ if (SERVER) then
 							v.callback(activator, reward.value)
 						end
 					end
+					
+					hook.Run('on_reward_received', activator)
 
 					self:EmitSound('buttons/blip1.wav')
 					reward_card:remove()
