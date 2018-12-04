@@ -1,8 +1,10 @@
 local plugin = PLUGIN
 
 --[[-------------------------------------------------------------------------
-									EXAMPLE
+EXAMPLE
+
 plugin.reward_register(
+	'reward_id',
 	'reward_name',
 	function(client, amount)
 		print 'reward_callback'
