@@ -1,6 +1,6 @@
 local plugin = PLUGIN
 plugin.name = 'Rewards'
-plugin.author = 'DrodA, Hiku'
+plugin.author = 'DrodA, Hika'
 plugin.desc = 'Adds flexible reward system'
 plugin.version = 1.0
 plugin.rewards = {}
